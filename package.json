@@ -1,8 +1,0 @@
-{
-  "name": "nana-connect-root",
-  "private": true,
-  "scripts": {
-    "build": "npm run build --prefix puja-connect-pro-main",
-    "install": "npm install --prefix puja-connect-pro-main"
-  }
-}
