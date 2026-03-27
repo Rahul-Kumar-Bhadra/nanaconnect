@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import create_tables
-from app.routers import auth, pandits, bookings, payments, admin
 from app.routers.pandits import router as pandits_router
 from app.routers.bookings import router as bookings_router
 from app.routers.payments import router as payments_router
