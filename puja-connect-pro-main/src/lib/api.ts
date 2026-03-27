@@ -8,7 +8,7 @@ const BASE_URL = import.meta.env.VITE_API_URL || 'https://nanaconnect-backend.on
 export const api = axios.create({
   baseURL: `${BASE_URL}/api/v1`,
   headers: { 'Content-Type': 'application/json' },
-  timeout: 15000,
+  timeout: 60000,
 });
 
 // ─── Request interceptor: attach JWT token on every request ────────────────
