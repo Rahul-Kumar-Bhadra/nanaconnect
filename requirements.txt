@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+pydantic
+pydantic-settings
+asyncpg
+aiosqlite
+python-multipart
+python-jose[cryptography]
+passlib[bcrypt]
+httpx
+psycopg2-binary
+sqlalchemy[asyncio]
+razorpay
+python-dotenv
