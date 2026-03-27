@@ -3,7 +3,7 @@ import axios from 'axios';
 // ─── Base URL ──────────────────────────────────────────────────────────────
 // In development  → http://localhost:8000
 // In production   → set VITE_API_URL in Netlify / Vercel env variables
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://nanaconnect-backend.onrender.com';
 
 export const api = axios.create({
   baseURL: `${BASE_URL}/api/v1`,
