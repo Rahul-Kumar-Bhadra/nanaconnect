@@ -1,6 +1,6 @@
 import hmac
 import hashlib
-from app.config import settings
+from config import settings
 
 def create_razorpay_order(amount_rupees: float, receipt: str) -> dict:
     try:

@@ -3,14 +3,14 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from typing import List
-from app.database import get_db
-from app.models.booking import Booking
-from app.models.pandit import Pandit
-from app.models.payment import Review
-from app.models.puja import PujaCategory
-from app.schemas.booking import BookingCreate, ReviewCreate
-from app.services.auth_service import decode_token, get_user_by_id
-from app.config import settings
+from database import get_db
+from models.booking import Booking
+from models.pandit import Pandit
+from models.payment import Review
+from models.puja import PujaCategory
+from schemas.booking import BookingCreate, ReviewCreate
+from services.auth_service import decode_token, get_user_by_id
+from config import settings
 import uuid
 
 router = APIRouter(prefix="/bookings", tags=["bookings"])

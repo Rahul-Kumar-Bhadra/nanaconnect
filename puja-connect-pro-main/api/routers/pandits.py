@@ -3,13 +3,13 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from typing import Optional, List
-from app.database import get_db
-from app.models.pandit import Pandit
-from app.models.user import User
-from app.models.booking import Booking
-from app.schemas.pandit import PanditProfileUpdate, AvailabilityRequest
-from app.services.auth_service import decode_token, get_user_by_id
-from app.config import settings
+from database import get_db
+from models.pandit import Pandit
+from models.user import User
+from models.booking import Booking
+from schemas.pandit import PanditProfileUpdate, AvailabilityRequest
+from services.auth_service import decode_token, get_user_by_id
+from config import settings
 
 router = APIRouter(prefix="/pandits", tags=["pandits"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")

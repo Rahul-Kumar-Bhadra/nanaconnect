@@ -1,13 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers.pandits import router as pandits_router
-from app.routers.bookings import router as bookings_router
-from app.routers.payments import router as payments_router
-from app.routers.admin import router as admin_router
-from app.routers.auth import router as auth_router
+from routers.pandits import router as pandits_router
+from routers.bookings import router as bookings_router
+from routers.payments import router as payments_router
+from routers.admin import router as admin_router
+from routers.auth import router as auth_router
 from sqlalchemy import select
-from app.database import AsyncSessionLocal
-from app.models.puja import PujaCategory
+from database import AsyncSessionLocal
+from models.puja import PujaCategory
 
 app = FastAPI(title="NanaConnect API", version="1.0.0")
 

@@ -2,13 +2,13 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from app.database import get_db
-from app.models.booking import Booking
-from app.models.payment import Payment
-from app.schemas.payment import CreateOrderRequest, CreateOrderResponse, VerifyPaymentRequest
-from app.services.auth_service import decode_token, get_user_by_id
-from app.services.razorpay_service import create_razorpay_order, verify_signature
-from app.config import settings
+from database import get_db
+from models.booking import Booking
+from models.payment import Payment
+from schemas.payment import CreateOrderRequest, CreateOrderResponse, VerifyPaymentRequest
+from services.auth_service import decode_token, get_user_by_id
+from services.razorpay_service import create_razorpay_order, verify_signature
+from config import settings
 import uuid
 
 router = APIRouter(prefix="/payments", tags=["payments"])

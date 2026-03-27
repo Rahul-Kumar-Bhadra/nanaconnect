@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, Float, Integer, Boolean, DateTime, JSON, 
 from sqlalchemy.orm import relationship
 from datetime import datetime, timezone
 import uuid
-from app.database import Base
+from database import Base
 
 class Pandit(Base):
     __tablename__ = "pandits"

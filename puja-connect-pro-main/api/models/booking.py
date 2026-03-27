@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, Float, Integer, DateTime, Text, ForeignKe
 from sqlalchemy.orm import relationship
 from datetime import datetime, timezone
 import uuid
-from app.database import Base
+from database import Base
 
 class Booking(Base):
     __tablename__ = "bookings"

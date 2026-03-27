@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Float, DateTime
 from datetime import datetime, timezone
 import uuid
-from app.database import Base
+from database import Base
 
 class PujaCategory(Base):
     __tablename__ = "puja_categories"
