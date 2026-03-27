@@ -21,7 +21,8 @@ app.add_middleware(
         "http://localhost:5173",
         "http://localhost:8080",
         "http://localhost:3000",
-        "*",
+        "https://nana-connect.vercel.app",
+        "https://puja-connect-pro-main.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -50,8 +51,11 @@ async def get_puja_categories():
 
 @app.on_event("startup")
 async def startup():
-    await create_tables()
-    print("Database tables created")
+    try:
+        await create_tables()
+        print("Database tables created")
+    except Exception as e:
+        print(f"Error during startup database creation: {e}")
 
 @app.get("/")
 async def root():
