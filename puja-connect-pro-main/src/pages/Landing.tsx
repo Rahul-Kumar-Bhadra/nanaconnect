@@ -114,7 +114,7 @@ const Landing = () => {
                     </div>
                   </div>
                 ))
-              : (pujaTypes || []).slice(0, 4).map((puja) => (
+              : (Array.isArray(pujaTypes) ? pujaTypes : []).slice(0, 4).map((puja) => (
                   <motion.div key={puja.id} whileHover={{ y: -4 }}
                     className="bg-card rounded-xl overflow-hidden border border-border shadow-sm">
                     <div className="h-32 bg-gradient-saffron flex items-center justify-center">
@@ -149,7 +149,7 @@ const Landing = () => {
                     <Skeleton className="h-4 w-1/2 mx-auto" />
                   </div>
                 ))
-              : (pandits || []).slice(0, 4).map((pandit) => (
+              : (Array.isArray(pandits) ? pandits : []).slice(0, 4).map((pandit) => (
                   <motion.div key={pandit.userId} whileHover={{ y: -4 }}
                     className="bg-card rounded-xl p-6 border border-border shadow-sm text-center">
                     <div className="h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 text-4xl">
@@ -163,7 +163,7 @@ const Landing = () => {
                       <span className="text-xs text-muted-foreground">({pandit.reviewCount})</span>
                     </div>
                     <div className="flex flex-wrap justify-center gap-1 mt-3">
-                      {pandit.languages.slice(0, 2).map(l => (
+                      {(pandit.languages || []).slice(0, 2).map(l => (
                         <span key={l} className="text-xs bg-secondary px-2 py-0.5 rounded-full text-secondary-foreground">{l}</span>
                       ))}
                     </div>
