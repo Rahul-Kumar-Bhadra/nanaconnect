@@ -1,3 +1,0 @@
-The "--name" option is deprecated (https://vercel.link/name-flag)
-Retrieving project…
-Error: The provided path “~\Desktop\Project Nana\puja-connect-pro-main\puja-connect-pro-main” does not exist. To change your Project Settings, go to https://vercel.com/rahul-kumar-bhadras-projects/puja-connect-pro-main/settings
