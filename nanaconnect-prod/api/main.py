@@ -30,13 +30,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth_router, prefix="/api/v1")
-app.include_router(pandits_router, prefix="/api/v1")
-app.include_router(bookings_router, prefix="/api/v1")
-app.include_router(payments_router, prefix="/api/v1")
-app.include_router(admin_router, prefix="/api/v1")
+app.include_router(auth_router, prefix="/v1")
+app.include_router(pandits_router, prefix="/v1")
+app.include_router(bookings_router, prefix="/v1")
+app.include_router(payments_router, prefix="/v1")
+app.include_router(admin_router, prefix="/v1")
 
-@app.get("/api/v1/puja-categories")
+@app.get("/v1/puja-categories")
 async def get_puja_categories():
     try:
         async with AsyncSessionLocal() as db:
@@ -52,6 +52,11 @@ async def get_puja_categories():
             ]
     except Exception as e:
         return {"error": str(e)}
+
+@app.get("/health")
+@app.get("/v1/health")
+async def health():
+    return {"status": "ok", "service": "NanaConnect API"}
 
 @app.get("/")
 async def root():

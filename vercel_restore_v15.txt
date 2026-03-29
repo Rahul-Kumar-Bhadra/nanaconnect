@@ -1,0 +1,79 @@
+Retrieving project…
+Deploying rahul-kumar-bhadras-projects/nana-connect-real
+Uploading [--------------------] (0.0B/279B)
+Uploading [====================] (279.0B/279B)
+Inspect: https://vercel.com/rahul-kumar-bhadras-projects/nana-connect-real/FvqkUQHhqw2ctjQgGtvZDQ6Wc7R5 [5s]
+Production: https://nana-connect-real-74dsk5xp8-rahul-kumar-bhadras-projects.vercel.app [5s]
+https://nana-connect-real-74dsk5xp8-rahul-kumar-bhadras-projects.vercel.appBuilding...
+Building...
+Building: Running build in Washington, D.C., USA (East) – iad1
+Building: Build machine configuration: 2 cores, 8 GB
+Building: Retrieving list of deployment files...
+Building: Downloading 183 deployment files...
+Building: Restored build cache from previous deployment (7pv6vP5Y7heYFRMwY1cNMaJ8BZpB)
+Building: Running "vercel build"
+Building: Vercel CLI 50.37.1
+Building: Installing dependencies...
+Building: Using CPython 3.14.3
+Building: Resolved 36 packages in 259ms
+Building: Downloading pydantic-core (2.0MiB)
+Building: Downloading cryptography (4.3MiB)
+Building: Downloading sqlalchemy (3.1MiB)
+Building: Downloading asyncpg (3.3MiB)
+Building: Downloaded pydantic-core
+Building: Downloaded asyncpg
+Building: Downloaded cryptography
+Building: Downloaded sqlalchemy
+Building: Prepared 36 packages in 275ms
+Building: warning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.
+Building: If the cache and target directories are on different filesystems, hardlinking may not be supported.
+Building: If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.
+Building: Installed 36 packages in 131ms
+Building: + annotated-doc==0.0.4
+Building: + annotated-types==0.7.0
+Building: + anyio==4.13.0
+Building: + asyncpg==0.31.0
+Building: + bcrypt==5.0.0
+Building: + certifi==2026.2.25
+Building: + cffi==2.0.0
+Building: + charset-normalizer==3.4.6
+Building: + click==8.3.1
+Building: + cryptography==46.0.6
+Building: + ecdsa==0.19.2
+Building: + fastapi==0.135.2
+Building: + greenlet==3.3.2
+Building: + h11==0.16.0
+Building: + httpcore==1.0.9
+Building: + httpx==0.28.1
+Building: + idna==3.11
+Building: + passlib==1.7.4
+Building: + pyasn1==0.6.3
+Building: + pycparser==3.0
+Building: + pydantic==2.12.5
+Building: + pydantic-core==2.41.5
+Building: + pydantic-settings==2.13.1
+Building: + python-dotenv==1.2.2
+Building: + python-jose==3.5.0
+Building: + python-multipart==0.0.22
+Building: + razorpay==2.0.1
+Building: + requests==2.33.0
+Building: + rsa==4.9.1
+Building: + six==1.17.0
+Building: + sqlalchemy==2.0.48
+Building: + starlette==1.0.0
+Building: + typing-extensions==4.15.0
+Building: + typing-inspection==0.4.2
+Building: + urllib3==2.6.3
+Building: + uvicorn==0.42.0
+Building: Installing dependencies...
+Building: up to date in 1s
+Building: 99 packages are looking for funding
+Building: run `npm fund` for details
+Building: > vite_react_shadcn_ts@0.0.0 build
+Building: > vite build
+Building: vite v5.4.19 building for production...
+Building: transforming...
+Building: Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+Building: npx update-browserslist-db@latest
+Building: Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Error: request to https://api.vercel.com/v13/deployments/dpl_FvqkUQHhqw2ctjQgGtvZDQ6Wc7R5?teamId=team_QsP8ybckshaNGIkFO8DWSRPu failed, reason: read ECONNRESET

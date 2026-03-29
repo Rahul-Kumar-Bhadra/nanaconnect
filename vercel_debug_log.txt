@@ -1,0 +1,187 @@
+> [debug] [2026-03-29T03:20:18.875Z] Found config in file "C:\Users\RAHUL KUMAR BHADRA\Desktop\Project Nana\vercel.json"
+> [debug] [2026-03-29T03:20:18.896Z] Vercel CLI 50.37.3
+> [debug] [2026-03-29T03:20:18.904Z] Agent/TTY/nonInteractive: isAgent=true agentName=antigravity stdin.isTTY=true --non-interactive=false explicitFalse=false => nonInteractive=false
+> [debug] [2026-03-29T03:20:18.905Z] user supplied a possible target for deployment or an extension
+> [debug] [2026-03-29T03:20:18.958Z] failed to find extension command with name "vercel---prod"
+> [debug] [2026-03-29T03:20:19.083Z] Setting target to production
+> [debug] [2026-03-29T03:20:19.107Z] Spinner invoked (Retrieving project…) with a 1000ms delay
+> [debug] [2026-03-29T03:20:19.110Z] Valid access token, skipping token refresh.
+> [debug] [2026-03-29T03:20:19.170Z] #1 → GET https://api.vercel.com/teams/team_QsP8ybckshaNGIkFO8DWSRPu?teamId=team_QsP8ybckshaNGIkFO8DWSRPu
+> [debug] [2026-03-29T03:20:19.173Z] #2 → GET https://api.vercel.com/v9/projects/prj_tmRFUssFyQjbPpA6ry0QdHb86hL0?teamId=team_QsP8ybckshaNGIkFO8DWSRPu
+> [debug] [2026-03-29T03:20:20.511Z] #1 ← 200 OK: sfo1::4c5vh-1774754419001-dad7fc0bb176 [1.34s]
+> [debug] [2026-03-29T03:20:20.520Z] #2 ← 200 OK: sfo1::s25q4-1774754419006-3938b882a583 [1.35s]
+> [debug] [2026-03-29T03:20:20.863Z] Spinner invoked (Deploying rahul-kumar-bhadras-projects/nana-connect-real) with a 0ms delay
+[client-debug] 2026-03-29T03:20:20.864Z Creating deployment...
+[client-debug] 2026-03-29T03:20:20.864Z Provided 'path' is a directory.
+[client-debug] 2026-03-29T03:20:20.868Z Found 26 rules in .vercelignore
+[client-debug] 2026-03-29T03:20:20.868Z Building file tree...
+[client-debug] 2026-03-29T03:20:20.894Z Found 203 files in the specified directory
+[client-debug] 2026-03-29T03:20:20.936Z Yielding a 'hashes-calculated' event with 185 hashes
+> [debug] [2026-03-29T03:20:20.939Z] #3 → GET https://api.vercel.com/v9/projects/nana-connect-real?teamId=team_QsP8ybckshaNGIkFO8DWSRPu
+> [debug] [2026-03-29T03:20:21.344Z] #3 ← 200 OK: sfo1::bqghr-1774754420159-1e3538bb856c [405ms]
+[client-debug] 2026-03-29T03:20:21.346Z Using provided API URL: https://api.vercel.com
+[client-debug] 2026-03-29T03:20:21.346Z Using provided user agent: vercel 50.37.3 node-v24.14.0 win32 (x64)
+[client-debug] 2026-03-29T03:20:21.346Z Setting platform version to harcoded value 2
+[client-debug] 2026-03-29T03:20:21.346Z Creating the deployment and starting upload...
+[client-debug] 2026-03-29T03:20:21.347Z Determining necessary files for upload...
+[client-debug] 2026-03-29T03:20:21.347Z Creating deployment
+[client-debug] 2026-03-29T03:20:21.349Z Sending deployment creation API request
+[client-debug] 2026-03-29T03:20:22.050Z Deployment response: {"error":{"code":"missing_files","message":"Missing files","missing":["bdd131163e59b3178328ffde48feab849d2e0bf1","d6eaf107c24cb2fb83a751d10454b953e3280f3a"]}}
+[client-debug] 2026-03-29T03:20:22.050Z Error: Deployment request status is 400
+[client-debug] 2026-03-29T03:20:22.050Z 2 files are required to upload
+[client-debug] 2026-03-29T03:20:22.050Z Yielding a 'file-count' event
+> [debug] [2026-03-29T03:20:22.051Z] Total files 185, 2 changed
+> [debug] [2026-03-29T03:20:22.051Z] Spinner invoked (Uploading [--------------------] (0.0B/6.5KB)) with a 0ms delay
+[client-debug] 2026-03-29T03:20:22.052Z Building an upload list...
+[client-debug] 2026-03-29T03:20:22.053Z Starting upload
+[client-debug] 2026-03-29T03:20:22.054Z POST https://api.vercel.com/v2/files?teamId=team_QsP8ybckshaNGIkFO8DWSRPu
+[client-debug] 2026-03-29T03:20:22.056Z POST https://api.vercel.com/v2/files?teamId=team_QsP8ybckshaNGIkFO8DWSRPu
+> [debug] [2026-03-29T03:20:22.057Z] Spinner invoked (Uploading [=====---------------] (1.7KB/6.5KB)) with a 0ms delay
+> [debug] [2026-03-29T03:20:22.058Z] Spinner invoked (Uploading [====================] (6.5KB/6.5KB)) with a 0ms delay
+[client-debug] 2026-03-29T03:20:22.544Z DONE in 488ms: POST https://api.vercel.com/v2/files?teamId=team_QsP8ybckshaNGIkFO8DWSRPu
+[client-debug] 2026-03-29T03:20:22.545Z File d6eaf107c24cb2fb83a751d10454b953e3280f3a (C:\Users\RAHUL KUMAR BHADRA\Desktop\Project Nana\vercel_diagnose_500.txt) uploaded
+[client-debug] 2026-03-29T03:20:22.545Z Yielding a 'file-uploaded' event
+> [debug] [2026-03-29T03:20:22.545Z] Uploaded: C:\Users\RAHUL KUMAR BHADRA\Desktop\Project Nana\vercel_diagnose_500.txt (4.75KB)
+[client-debug] 2026-03-29T03:20:22.547Z DONE in 493ms: POST https://api.vercel.com/v2/files?teamId=team_QsP8ybckshaNGIkFO8DWSRPu
+[client-debug] 2026-03-29T03:20:22.547Z File bdd131163e59b3178328ffde48feab849d2e0bf1 (C:\Users\RAHUL KUMAR BHADRA\Desktop\Project Nana\vercel_debug_log.txt) uploaded
+[client-debug] 2026-03-29T03:20:22.547Z Yielding a 'file-uploaded' event
+> [debug] [2026-03-29T03:20:22.547Z] Uploaded: C:\Users\RAHUL KUMAR BHADRA\Desktop\Project Nana\vercel_debug_log.txt (1.73KB)
+[client-debug] 2026-03-29T03:20:22.547Z All files uploaded
+[client-debug] 2026-03-29T03:20:22.547Z Yielding a 'all-files-uploaded' event
+[client-debug] 2026-03-29T03:20:22.547Z Starting deployment creation
+[client-debug] 2026-03-29T03:20:22.547Z Creating deployment
+[client-debug] 2026-03-29T03:20:22.549Z Sending deployment creation API request
+[client-debug] 2026-03-29T03:20:24.662Z Deployment response: {"alias":["nana-connect-real-rahul-kumar-bhadras-projects.vercel.app"],"aliasAssigned":false,"automaticAliases":["nana-connect-real-rahul-kumar-bhadras-projects.vercel.app"],"bootedAt":1774754422347,"buildingAt":1774754422347,"buildSkipped":false,"createdAt":1774754422347,"creator":{"uid":"jdZKxc0PN1WkKc1QQXXVbecR","username":"rahul-kumar-bhadra"},"id":"dpl_CdrTyfjsXPsWaskztyYFcCCgFS14","name":"nana-connect-real","meta":{"githubCommitAuthorName":"Rahul-Kumar-Bhadra","githubCommitAuthorEmail":"rahulbhadra222@gmail.com","githubCommitMessage":"Final deployment: Folder rename and configuration fixes","githubCommitOrg":"Rahul-Kumar-Bhadra","githubCommitRef":"main","githubCommitRepo":"NanaConnect","githubCommitSha":"4810f8d7a2298a2e6edc8985c9024dd87b5af1f6","githubDeployment":"1","githubOrg":"Rahul-Kumar-Bhadra","githubRepo":"NanaConnect","gitDirty":"1","actor":"antigravity"},"originCacheRegion":"iad1","project":{"id":"prj_tmRFUssFyQjbPpA6ry0QdHb86hL0","name":"nana-connect-real","framework":"vite"},"public":false,"readyState":"INITIALIZING","regions":["iad1"],"source":"cli","status":"INITIALIZING","target":"production","team":{"id":"team_QsP8ybckshaNGIkFO8DWSRPu","name":"rahul-kumar-bhadra's projects","slug":"rahul-kumar-bhadras-projects"},"type":"LAMBDAS","url":"nana-connect-real-48d2zrtsc-rahul-kumar-bhadras-projects.vercel.app","version":2,"previewCommentsEnabled":true,"oidcTokenClaims":{"sub":"owner:rahul-kumar-bhadras-projects:project:nana-connect-real:environment:production","iss":"https://oidc.vercel.com/rahul-kumar-bhadras-projects","scope":"owner:rahul-kumar-bhadras-projects:project:nana-connect-real:environment:production","aud":"https://vercel.com/rahul-kumar-bhadras-projects","owner":"rahul-kumar-bhadras-projects","owner_id":"team_QsP8ybckshaNGIkFO8DWSRPu","project":"nana-connect-real","project_id":"prj_tmRFUssFyQjbPpA6ry0QdHb86hL0","environment":"production","plan":"hobby"},"lambdas":[{"id":"bld_mron0jufb","createdAt":1774754422577,"entrypoint":".","readyState":"READY","readyStateAt":1774754422577,"output":[]}],"aliasAssignedAt":null,"build":{"env":[]},"builds":[],"createdIn":"sfo1","env":[],"functions":null,"inspectorUrl":"https://vercel.com/rahul-kumar-bhadras-projects/nana-connect-real/CdrTyfjsXPsWaskztyYFcCCgFS14","isInConcurrentBuildsQueue":false,"isInSystemBuildsQueue":true,"ownerId":"team_QsP8ybckshaNGIkFO8DWSRPu","plan":"hobby","projectId":"prj_tmRFUssFyQjbPpA6ry0QdHb86hL0","projectSettings":{"buildCommand":"npm run build","devCommand":null,"framework":"vite","commandForIgnoringBuildStep":null,"installCommand":null,"outputDirectory":"dist","speedInsights":{"id":"LnSSZPu4hDR4YLSJ0u7FoMOqcrG","hasData":false},"webAnalytics":{"id":"Ldn2QXtdDqSCmZiS64Oiqttpp"},"nodeVersion":"24.x"},"routes":[{"handle":"filesystem"},{"src":"^/api/v1(?:/(.*))$","dest":"/api/index.py","check":true},{"src":"^/api(?:/(.*))$","dest":"/api/index.py","check":true},{"src":"^(?:/(.*))$","dest":"/index.html","check":true}],"config":{"version":1,"secureComputePrimaryRegion":null,"secureComputeFallbackRegion":null,"functionTimeout":300,"functionType":"fluid","functionMemoryType":"standard","isUsingActiveCPU":true,"resourceConfig":{"buildQueue":{"configuration":"SKIP_NAMESPACE_QUEUE"}}}}
+[client-debug] 2026-03-29T03:20:24.663Z Deployment created
+[client-debug] 2026-03-29T03:20:24.663Z Yielding a 'created' event
+Inspect: https://vercel.com/rahul-kumar-bhadras-projects/nana-connect-real/CdrTyfjsXPsWaskztyYFcCCgFS14 [4s]
+Production: https://nana-connect-real-48d2zrtsc-rahul-kumar-bhadras-projects.vercel.app [4s]
+https://nana-connect-real-48d2zrtsc-rahul-kumar-bhadras-projects.vercel.app> [debug] [2026-03-29T03:20:24.664Z] Spinner invoked (Building...) with a 0ms delay
+> [debug] [2026-03-29T03:20:24.665Z] #4 → GET https://api.vercel.com/v2/user
+[client-debug] 2026-03-29T03:20:24.665Z Waiting for deployment to be ready...
+[client-debug] 2026-03-29T03:20:24.666Z Waiting for builds and the deployment to complete...
+> [debug] [2026-03-29T03:20:25.092Z] #4 ← 200 OK: sfo1::nskd9-1774754423831-0d94a012a2b5 [427ms]
+> [debug] [2026-03-29T03:20:25.097Z] #5 → GET https://api.vercel.com/v3/now/deployments/dpl_CdrTyfjsXPsWaskztyYFcCCgFS14/events?direction=forward&follow=1&format=lines&teamId=team_QsP8ybckshaNGIkFO8DWSRPu
+[client-debug] 2026-03-29T03:20:25.205Z Deployment state changed to BUILDING
+[client-debug] 2026-03-29T03:20:25.206Z Yielding a 'building' event
+> [debug] [2026-03-29T03:20:25.206Z] Spinner invoked (Building...) with a 0ms delay
+> [debug] [2026-03-29T03:20:27.524Z] #5 ← 200 OK: sfo1::vfccx-1774754424255-054b6797c328 [2.43s]
+> [debug] [2026-03-29T03:20:27.529Z] Spinner invoked (Building: Running build in Washington, D.C., USA (East) – iad1) with a 0ms delay
+> [debug] [2026-03-29T03:20:27.529Z] Spinner invoked (Building: Build machine configuration: 2 cores, 8 GB) with a 0ms delay
+> [debug] [2026-03-29T03:20:27.529Z] Spinner invoked (Building: Retrieving list of deployment files...) with a 0ms delay
+> [debug] [2026-03-29T03:20:27.529Z] Spinner invoked (Building: Downloading 203 deployment files...) with a 0ms delay
+> [debug] [2026-03-29T03:20:28.561Z] Spinner invoked (Building: Restored build cache from previous deployment (FEfyybwsRbaHSa822Uooh7T7Sy1d)) with a 0ms delay
+> [debug] [2026-03-29T03:20:28.561Z] Spinner invoked (Building: Running "vercel build") with a 0ms delay
+> [debug] [2026-03-29T03:20:29.660Z] Spinner invoked (Building: Vercel CLI 50.37.1) with a 0ms delay
+> [debug] [2026-03-29T03:20:29.660Z] Spinner invoked (Building: Installing dependencies...) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.828Z] Spinner invoked (Building: Using CPython 3.14.3) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.829Z] Spinner invoked (Building: Resolved 36 packages in 270ms) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.829Z] Spinner invoked (Building: Downloading cryptography (4.3MiB)) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.829Z] Spinner invoked (Building: Downloading pydantic-core (2.0MiB)) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.829Z] Spinner invoked (Building: Downloading sqlalchemy (3.1MiB)) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.829Z] Spinner invoked (Building: Downloading asyncpg (3.3MiB)) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.829Z] Spinner invoked (Building: Downloaded pydantic-core) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.830Z] Spinner invoked (Building: Downloaded asyncpg) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.830Z] Spinner invoked (Building: Downloaded cryptography) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.830Z] Spinner invoked (Building: Downloaded sqlalchemy) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: Prepared 36 packages in 280ms) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: warning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: If the cache and target directories are on different filesystems, hardlinking may not be supported.) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: Installed 36 packages in 159ms) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: + annotated-doc==0.0.4) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: + annotated-types==0.7.0) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: + anyio==4.13.0) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: + asyncpg==0.31.0) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: + bcrypt==5.0.0) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: + certifi==2026.2.25) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: + cffi==2.0.0) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: + charset-normalizer==3.4.6) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: + click==8.3.1) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: + cryptography==46.0.6) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: + ecdsa==0.19.2) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.831Z] Spinner invoked (Building: + fastapi==0.135.2) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + greenlet==3.3.2) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + h11==0.16.0) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + httpcore==1.0.9) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + httpx==0.28.1) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + idna==3.11) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + passlib==1.7.4) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + pyasn1==0.6.3) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + pycparser==3.0) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + pydantic==2.12.5) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + pydantic-core==2.41.5) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + pydantic-settings==2.13.1) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + python-dotenv==1.2.2) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + python-jose==3.5.0) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + python-multipart==0.0.22) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + razorpay==2.0.1) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + requests==2.33.0) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + rsa==4.9.1) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + six==1.17.0) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + sqlalchemy==2.0.48) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.832Z] Spinner invoked (Building: + starlette==1.0.0) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.833Z] Spinner invoked (Building: + typing-extensions==4.15.0) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.833Z] Spinner invoked (Building: + typing-inspection==0.4.2) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.833Z] Spinner invoked (Building: + urllib3==2.6.3) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.833Z] Spinner invoked (Building: + uvicorn==0.42.0) with a 0ms delay
+> [debug] [2026-03-29T03:20:32.833Z] Spinner invoked (Building: Installing dependencies...) with a 0ms delay
+> [debug] [2026-03-29T03:20:33.874Z] Spinner invoked (Building: up to date in 969ms) with a 0ms delay
+> [debug] [2026-03-29T03:20:33.874Z] Spinner invoked (Building: 99 packages are looking for funding) with a 0ms delay
+> [debug] [2026-03-29T03:20:33.874Z] Spinner invoked (Building: run `npm fund` for details) with a 0ms delay
+> [debug] [2026-03-29T03:20:33.874Z] Spinner invoked (Building: > vite_react_shadcn_ts@0.0.0 build) with a 0ms delay
+> [debug] [2026-03-29T03:20:33.874Z] Spinner invoked (Building: > vite build) with a 0ms delay
+> [debug] [2026-03-29T03:20:33.874Z] Spinner invoked (Building: vite v5.4.19 building for production...) with a 0ms delay
+> [debug] [2026-03-29T03:20:33.874Z] Spinner invoked (Building: transforming...) with a 0ms delay
+> [debug] [2026-03-29T03:20:33.875Z] Spinner invoked (Building: Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:) with a 0ms delay
+> [debug] [2026-03-29T03:20:33.875Z] Spinner invoked (Building: npx update-browserslist-db@latest) with a 0ms delay
+> [debug] [2026-03-29T03:20:33.875Z] Spinner invoked (Building: Why you should do it regularly: https://github.com/browserslist/update-db#readme) with a 0ms delay
+> [debug] [2026-03-29T03:20:38.981Z] Spinner invoked (Building: ✓ 2143 modules transformed.) with a 0ms delay
+> [debug] [2026-03-29T03:20:38.981Z] Spinner invoked (Building: rendering chunks...) with a 0ms delay
+> [debug] [2026-03-29T03:20:38.981Z] Spinner invoked (Building: computing gzip size...) with a 0ms delay
+> [debug] [2026-03-29T03:20:38.981Z] Spinner invoked (Building: dist/index.html                   0.96 kB │ gzip:   0.47 kB) with a 0ms delay
+> [debug] [2026-03-29T03:20:38.982Z] Spinner invoked (Building: dist/assets/index-avJRHoGv.css   65.51 kB │ gzip:  11.48 kB) with a 0ms delay
+> [debug] [2026-03-29T03:20:38.982Z] Spinner invoked (Building: dist/assets/index-C9lSM3_g.js   598.68 kB │ gzip: 182.05 kB) with a 0ms delay
+> [debug] [2026-03-29T03:20:38.982Z] Spinner invoked (Building: (!) Some chunks are larger than 500 kB after minification. Consider:) with a 0ms delay
+> [debug] [2026-03-29T03:20:38.982Z] Spinner invoked (Building: - Using dynamic import() to code-split the application) with a 0ms delay
+> [debug] [2026-03-29T03:20:38.982Z] Spinner invoked (Building: - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks) with a 0ms delay
+> [debug] [2026-03-29T03:20:38.982Z] Spinner invoked (Building: - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.) with a 0ms delay
+> [debug] [2026-03-29T03:20:38.982Z] Spinner invoked (Building: ✓ built in 5.58s) with a 0ms delay
+> [debug] [2026-03-29T03:20:42.185Z] Spinner invoked (Building: No Python version specified in .python-version, pyproject.toml, or Pipfile.lock. Using python version: 3.12) with a 0ms delay
+> [debug] [2026-03-29T03:20:44.078Z] Spinner invoked (Building: Creating virtual environment at "/vercel/path0/.vercel/python/.venv"...) with a 0ms delay
+> [debug] [2026-03-29T03:20:47.177Z] Spinner invoked (Building: Using uv 0.10.11) with a 0ms delay
+> [debug] [2026-03-29T03:20:47.177Z] Spinner invoked (Building: Installing required dependencies from api/requirements.txt...) with a 0ms delay
+> [debug] [2026-03-29T03:20:48.210Z] Spinner invoked (Building: Build Completed in /vercel/output [17s]) with a 0ms delay
+> [debug] [2026-03-29T03:20:48.211Z] Spinner invoked (Building: Deploying outputs...) with a 0ms delay
+[client-debug] 2026-03-29T03:21:03.748Z Deployment state changed to READY
+[client-debug] 2026-03-29T03:21:03.748Z Yielding a 'ready' event
+[2K[1A[2K[GProduction: https://nana-connect-real-48d2zrtsc-rahul-kumar-bhadras-projects.vercel.app [43s]
+> [debug] [2026-03-29T03:21:03.751Z] Spinner invoked (Completing...) with a 0ms delay
+[client-debug] 2026-03-29T03:21:03.751Z Deployment alias assigned
+[client-debug] 2026-03-29T03:21:03.751Z Deployment is ready
+[client-debug] 2026-03-29T03:21:03.751Z Yielding a 'alias-assigned' event
+Aliased: https://nana-connect-real.vercel.app [43s]
+> [debug] [2026-03-29T03:21:03.753Z] #6 → GET https://api.vercel.com/v13/deployments/dpl_CdrTyfjsXPsWaskztyYFcCCgFS14?teamId=team_QsP8ybckshaNGIkFO8DWSRPu
+> [debug] [2026-03-29T03:21:04.779Z] #6 ← 200 OK: sfo1::685bc-1774754462900-3b16777814b8 [1.03s]
+
+Common next commands:
+- `vercel inspect nana-connect-real-48d2zrtsc-rahul-kumar-bhadras-projects.vercel.app --logs`
+- `vercel redeploy nana-connect-real-48d2zrtsc-rahul-kumar-bhadras-projects.vercel.app`
+> [debug] [2026-03-29T03:21:04.802Z] #7 → GET https://api.vercel.com/v2/user
+> [debug] [2026-03-29T03:21:05.146Z] #7 ← 200 OK: sfo1::nvbn4-1774754463974-469f52ff6702 [344ms]
+> [debug] [2026-03-29T03:21:07.203Z] Telemetry subprocess killed due to timeout
+> [debug] [2026-03-29T03:21:07.231Z] Telemetry subprocess exited with code null
+> [debug] [2026-03-29T03:21:07.233Z] Spawning C:\Users\RAHUL KUMAR BHADRA\AppData\Roaming\npm\node_modules\vercel\dist\get-latest-worker.cjs
+> '[debug] [2026-03-29T03:21:07.357Z] Notifying parent we're ready
+> '[debug] [2026-03-29T03:21:07.364Z] Received message from parent: {
+  cacheFile: 'C:\\Users\\RAHUL KUMAR BHADRA\\AppData\\Local\\com.vercel.cli\\Cache\\package-updates\\vercel-latest.json',
+  distTag: 'latest',
+  name: 'vercel',
+  updateCheckInterval: 86400000
+}
+> '[debug] [2026-03-29T03:21:07.364Z] Disconnecting from parent
+> '[debug] [2026-03-29T03:21:07.367Z] Checking lock file: C:\Users\RAHUL KUMAR BHADRA\AppData\Local\com.vercel.cli\Cache\package-updates\vercel-latest.lock
+> '[debug] [2026-03-29T03:21:07.370Z] Found lock file with pid: 15312
+> '[debug] [2026-03-29T03:21:07.371Z] Resetting lock file: Error: kill ESRCH
+> '[debug] [2026-03-29T03:21:07.373Z] Initializing lock file with pid 21800
+> '[debug] [2026-03-29T03:21:07.376Z] Fetching https://registry.npmjs.org/-/package/vercel/dist-tags

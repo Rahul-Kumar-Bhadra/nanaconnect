@@ -1,0 +1,18 @@
+Retrieving project…
+Deploying rahul-kumar-bhadras-projects/nana-connect-real
+Uploading [--------------------] (0.0B/1.2KB)
+Uploading [================----] (982.0B/1.2KB)
+Uploading [====================] (1.2KB/1.2KB)
+Inspect: https://vercel.com/rahul-kumar-bhadras-projects/nana-connect-real/AUwX7FsswWW4LUqDynSWZGUY9erx [3s]
+Production: https://nana-connect-real-hfkxbwkyn-rahul-kumar-bhadras-projects.vercel.app [3s]
+https://nana-connect-real-hfkxbwkyn-rahul-kumar-bhadras-projects.vercel.appBuilding...
+Building...
+Building: Running build in Washington, D.C., USA (East) – iad1
+Building: Build machine configuration: 2 cores, 8 GB
+Building: Retrieving list of deployment files...
+Building: Downloading 205 deployment files...
+Building: Restored build cache from previous deployment (CdrTyfjsXPsWaskztyYFcCCgFS14)
+Building: Running "vercel build"
+Building: Vercel CLI 50.37.1
+Building: > Installing Builder: vercel-python@0.1.0
+Error: The package `vercel-python` is not published on the npm registry

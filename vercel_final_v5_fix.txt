@@ -1,0 +1,16 @@
+Retrieving project…
+Deploying rahul-kumar-bhadras-projects/nana-connect-real
+Uploading [--------------------] (0.0B/22.2KB)
+Uploading [==============------] (16.3KB/22.2KB)
+Uploading [====================] (22.2KB/22.2KB)
+Inspect: https://vercel.com/rahul-kumar-bhadras-projects/nana-connect-real/CZ55wVsKFpEucUQv3xJMnuLgpCoH [4s]
+Production: https://nana-connect-real-glabof1pi-rahul-kumar-bhadras-projects.vercel.app [4s]
+https://nana-connect-real-glabof1pi-rahul-kumar-bhadras-projects.vercel.appBuilding...
+Building...
+Building: Running build in Washington, D.C., USA (East) – iad1
+Building: Build machine configuration: 2 cores, 8 GB
+Building: Retrieving list of deployment files...
+Building: Downloading 204 deployment files...
+Building: Restored build cache from previous deployment (CdrTyfjsXPsWaskztyYFcCCgFS14)
+Building: Running "vercel build"
+Error: The pattern "api/index.py" defined in `functions` doesn't match any Serverless Functions inside the `api` directory.
