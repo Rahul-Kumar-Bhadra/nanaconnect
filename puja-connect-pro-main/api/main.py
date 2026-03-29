@@ -6,10 +6,21 @@ from routers.payments import router as payments_router
 from routers.admin import router as admin_router
 from routers.auth import router as auth_router
 from sqlalchemy import select
-from database import AsyncSessionLocal
+from database import AsyncSessionLocal, engine, Base
 from models.puja import PujaCategory
+from contextlib import asynccontextmanager
 
-app = FastAPI(title="NanaConnect API", version="1.0.0")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Ensure tables are created on database connection
+    try:
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+    except Exception as e:
+        print(f"Error creating tables: {e}")
+    yield
+
+app = FastAPI(title="NanaConnect API", version="1.0.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
