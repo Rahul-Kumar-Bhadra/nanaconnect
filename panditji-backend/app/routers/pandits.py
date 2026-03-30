@@ -23,6 +23,20 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: AsyncSession
         raise HTTPException(status_code=401, detail="User not found")
     return user
 
+async def get_or_create_pandit(db: AsyncSession, current_user: User) -> Pandit:
+    result = await db.execute(select(Pandit).where(Pandit.user_id == current_user.id))
+    pandit = result.scalar_one_or_none()
+    if not pandit:
+        if current_user.role == "pandit":
+            import uuid
+            pandit = Pandit(id=str(uuid.uuid4()), user_id=current_user.id, city=current_user.city)
+            db.add(pandit)
+            await db.commit()
+            await db.refresh(pandit)
+        else:
+            raise HTTPException(status_code=404, detail="Pandit profile not found")
+    return pandit
+
 async def pandit_to_response(pandit: Pandit, db: AsyncSession) -> dict:
     user = await get_user_by_id(db, pandit.user_id)
     return {
@@ -39,6 +53,7 @@ async def pandit_to_response(pandit: Pandit, db: AsyncSession) -> dict:
         "pricePerHour": pandit.price_per_hour,
         "availability": pandit.availability or [],
         "avatar": pandit.avatar or "🙏",
+        "phone": user.phone if user else None,
     }
 
 @router.get("", response_model=List[dict])
@@ -62,18 +77,12 @@ async def list_pandits(
 
 @router.get("/me", response_model=dict)
 async def get_my_pandit_profile(current_user: User = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Pandit).where(Pandit.user_id == current_user.id))
-    pandit = result.scalar_one_or_none()
-    if not pandit:
-        raise HTTPException(status_code=404, detail="Pandit profile not found")
+    pandit = await get_or_create_pandit(db, current_user)
     return await pandit_to_response(pandit, db)
 
 @router.get("/me/bookings", response_model=List[dict])
 async def get_pandit_bookings(current_user: User = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Pandit).where(Pandit.user_id == current_user.id))
-    pandit = result.scalar_one_or_none()
-    if not pandit:
-        raise HTTPException(status_code=404, detail="Pandit profile not found")
+    pandit = await get_or_create_pandit(db, current_user)
     b_result = await db.execute(select(Booking).where(Booking.pandit_id == pandit.id))
     bookings = b_result.scalars().all()
     out = []
@@ -123,10 +132,7 @@ async def get_availability(pandit_id: str, date: Optional[str] = Query(None), db
 
 @router.post("/profile", response_model=dict)
 async def create_profile(data: PanditProfileUpdate, current_user: User = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Pandit).where(Pandit.user_id == current_user.id))
-    pandit = result.scalar_one_or_none()
-    if not pandit:
-        raise HTTPException(status_code=404, detail="Pandit profile not found")
+    pandit = await get_or_create_pandit(db, current_user)
     for field, value in data.model_dump(exclude_none=True).items():
         setattr(pandit, field, value)
     await db.commit()
@@ -134,16 +140,17 @@ async def create_profile(data: PanditProfileUpdate, current_user: User = Depends
 
 @router.put("/profile", response_model=dict)
 async def update_profile(data: PanditProfileUpdate, current_user: User = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Pandit).where(Pandit.user_id == current_user.id))
-    pandit = result.scalar_one_or_none()
-    if not pandit:
-        raise HTTPException(status_code=404, detail="Pandit profile not found")
+    pandit = await get_or_create_pandit(db, current_user)
     
     update_data = data.model_dump(exclude_none=True)
     if "experience" in update_data and "experience_years" not in update_data:
         update_data["experience_years"] = update_data.pop("experience")
     elif "experience" in update_data:
         update_data.pop("experience")
+
+    if "phone" in update_data:
+        current_user.phone = update_data.pop("phone")
+        db.add(current_user)
 
     for field, value in update_data.items():
         if hasattr(pandit, field):
@@ -154,10 +161,7 @@ async def update_profile(data: PanditProfileUpdate, current_user: User = Depends
 
 @router.post("/availability", response_model=dict)
 async def set_availability(data: AvailabilityRequest, current_user: User = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Pandit).where(Pandit.user_id == current_user.id))
-    pandit = result.scalar_one_or_none()
-    if not pandit:
-        raise HTTPException(status_code=404, detail="Pandit profile not found")
+    pandit = await get_or_create_pandit(db, current_user)
     
     pandit.availability = [s.model_dump() for s in data.slots]
     await db.commit()

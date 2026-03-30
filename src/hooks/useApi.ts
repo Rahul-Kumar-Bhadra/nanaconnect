@@ -31,6 +31,7 @@ export interface PanditProfile {
   city: string;
   avatar: string;
   status?: string;
+  phone?: string;
 }
 
 export interface Booking {
@@ -275,6 +276,8 @@ export const useVerifyPandit = () => {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['admin-pending-pandits'] });
       qc.invalidateQueries({ queryKey: ['pandits'] });
+      qc.invalidateQueries({ queryKey: ['admin-all-pandits'] });
+      qc.invalidateQueries({ queryKey: ['analytics'] });
     },
   });
 };
@@ -332,6 +335,7 @@ export const useAdminDeletePandit = () => {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['pandits'] });
       qc.invalidateQueries({ queryKey: ['admin-pending-pandits'] });
+      qc.invalidateQueries({ queryKey: ['admin-all-pandits'] });
       qc.invalidateQueries({ queryKey: ['analytics'] });
     },
   });

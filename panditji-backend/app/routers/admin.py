@@ -58,14 +58,15 @@ async def get_users(current_user=Depends(get_admin_user), db: AsyncSession = Dep
 
 @router.get("/pandits/pending", response_model=List[dict])
 async def get_pending_pandits(current_user=Depends(get_admin_user), db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Pandit).where(Pandit.is_verified == False))
-    pandits = result.scalars().all()
+    stmt = select(Pandit, User).join(User, Pandit.user_id == User.id).where(Pandit.is_verified == False)
+    result = await db.execute(stmt)
+    rows = result.all()
     out = []
-    for p in pandits:
-        user = await get_user_by_id(db, p.user_id)
+    for p, user in rows:
         out.append({
             "userId": p.id,
             "name": user.name if user else "Unknown",
+            "phone": user.phone if user else None,
             "city": p.city,
             "experience": p.experience_years,
             "rating": p.rating_avg,
@@ -119,15 +120,16 @@ async def delete_pandit_profile(pandit_id: str, current_user=Depends(get_admin_u
 
 @router.get("/pandits", response_model=List[dict])
 async def get_all_pandits(current_user=Depends(get_admin_user), db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Pandit))
-    pandits = result.scalars().all()
+    stmt = select(Pandit, User).join(User, Pandit.user_id == User.id)
+    result = await db.execute(stmt)
+    rows = result.all()
     out = []
-    for p in pandits:
-        user = await get_user_by_id(db, p.user_id)
+    for p, user in rows:
         out.append({
             "id": p.id,
             "userId": p.user_id,
             "name": user.name if user else "Unknown",
+            "phone": user.phone if user else None,
             "city": p.city,
             "experience": p.experience_years,
             "rating": p.rating_avg,
@@ -145,14 +147,20 @@ async def get_all_pandits(current_user=Depends(get_admin_user), db: AsyncSession
 
 @router.get("/bookings", response_model=List[dict])
 async def get_all_bookings(current_user=Depends(get_admin_user), db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Booking))
-    bookings = result.scalars().all()
+    from sqlalchemy.orm import aliased
+    PanditUser = aliased(User)
+    
+    stmt = (
+        select(Booking, User, Pandit, PanditUser)
+        .outerjoin(User, Booking.user_id == User.id)
+        .outerjoin(Pandit, Booking.pandit_id == Pandit.id)
+        .outerjoin(PanditUser, Pandit.user_id == PanditUser.id)
+    )
+    result = await db.execute(stmt)
+    rows = result.all()
+    
     out = []
-    for b in bookings:
-        user = await get_user_by_id(db, b.user_id)
-        pandit_result = await db.execute(select(Pandit).where(Pandit.id == b.pandit_id))
-        pandit = pandit_result.scalar_one_or_none()
-        pandit_user = await get_user_by_id(db, pandit.user_id) if pandit else None
+    for b, user, pandit, pandit_user in rows:
         out.append({
             "id": b.id,
             "userId": b.user_id,

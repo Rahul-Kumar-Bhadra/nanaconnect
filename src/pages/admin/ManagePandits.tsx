@@ -109,6 +109,9 @@ const ManagePandits = () => {
                                       <p className="text-sm text-muted-foreground flex items-center gap-1">
                                         <MapPin className="h-3 w-3" /> {selectedPandit.city}
                                       </p>
+                                      <p className="text-sm text-foreground mt-1 flex items-center gap-1 font-medium">
+                                        📞 {selectedPandit.phone || 'No phone number added'}
+                                      </p>
                                     </div>
                                   </div>
 

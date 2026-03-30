@@ -44,6 +44,7 @@ const ManageUsers = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-users'] });
+      queryClient.invalidateQueries({ queryKey: ['analytics'] });
       toast.success('User deleted successfully');
     },
     onError: (error: any) => {

@@ -10,6 +10,7 @@ class PanditProfileUpdate(BaseModel):
     price_per_hour: Optional[float] = None
     specializations: Optional[List[str]] = None
     avatar: Optional[str] = None
+    phone: Optional[str] = None
 
 class PanditResponse(BaseModel):
     userId: str
@@ -25,6 +26,7 @@ class PanditResponse(BaseModel):
     pricePerHour: float = 0.0
     availability: List[dict] = []
     avatar: str = "🙏"
+    phone: Optional[str] = None
 
 class AvailabilitySlot(BaseModel):
     date: str

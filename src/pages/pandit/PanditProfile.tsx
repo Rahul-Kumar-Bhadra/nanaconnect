@@ -24,6 +24,7 @@ interface PanditProfileData {
   pricePerHour: number;
   city: string;
   avatar: string;
+  phone?: string;
 }
 
 const PanditProfilePage = () => {
@@ -40,6 +41,7 @@ const PanditProfilePage = () => {
   const [experience, setExperience] = useState('');
   const [pricePerHour, setPricePerHour] = useState('');
   const [city, setCity] = useState('');
+  const [phone, setPhone] = useState('');
   const [languages, setLanguages] = useState('');
   const [bio, setBio] = useState('');
   const [specializations, setSpecializations] = useState('');
@@ -50,6 +52,7 @@ const PanditProfilePage = () => {
       setExperience(String(profile.experience));
       setPricePerHour(String(profile.pricePerHour));
       setCity(profile.city);
+      setPhone(profile.phone || '');
       setLanguages(profile.languages.join(', '));
       setBio(profile.bio);
       setSpecializations(profile.specializations.join(', '));
@@ -58,10 +61,14 @@ const PanditProfilePage = () => {
 
   const updateProfile = useMutation({
     mutationFn: async () => {
+      if (!phone || phone.trim() === '') {
+        throw new Error('Phone number is compulsory.');
+      }
       const res = await api.put('/pandits/profile', {
         experience: parseInt(experience) || 0,
         price_per_hour: parseFloat(pricePerHour) || 0,
         city,
+        phone,
         languages: languages.split(',').map(l => l.trim()).filter(Boolean),
         bio,
         specializations: specializations.split(',').map(s => s.trim()).filter(Boolean),
@@ -139,6 +146,10 @@ const PanditProfilePage = () => {
               <Input value={city} onChange={e => setCity(e.target.value)} placeholder="e.g., Mumbai" className="mt-1" />
             </div>
             <div>
+              <Label>Phone Number <span className="text-destructive">*</span></Label>
+              <Input type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder="+91 9876543210" className="mt-1" required />
+            </div>
+            <div className="sm:col-span-2">
               <Label>Languages</Label>
               <Input value={languages} onChange={e => setLanguages(e.target.value)}
                 placeholder="Hindi, Sanskrit, Odia" className="mt-1" />
