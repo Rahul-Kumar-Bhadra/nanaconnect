@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, delete
@@ -22,7 +22,7 @@ import uuid
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post("/register", response_model=TokenResponse)
-async def register(data: UserRegister, db: AsyncSession = Depends(get_db)):
+async def register(data: UserRegister, background_tasks: BackgroundTasks, db: AsyncSession = Depends(get_db)):
     existing = await get_user_by_email(db, data.email)
     if existing:
         raise HTTPException(status_code=400, detail="Email already registered.")
@@ -50,11 +50,8 @@ async def register(data: UserRegister, db: AsyncSession = Depends(get_db)):
     await db.commit()
     await db.refresh(user)
     
-    # Send welcome email asynchronously (fire and forget for responsiveness)
-    try:
-        send_welcome_email(user.email, user.name)
-    except Exception:
-        pass
+    # Send welcome email in the background to prevent timeout
+    background_tasks.add_task(send_welcome_email, user.email, user.name)
         
     token_data = {"sub": user.id, "role": user.role}
     return TokenResponse(
