@@ -44,9 +44,18 @@ app = FastAPI(title="NanaConnect API", version="1.0.0", lifespan=lifespan)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+# CORS Configuration
+origins = [
+    settings.FRONTEND_URL,
+    "https://nanaconnect.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:3000",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.FRONTEND_URL, "http://localhost:5173"],
+    allow_origins=origins,
+    allow_origin_regex=r"https://nanaconnect-.*\.vercel\.app", # Support Vercel previews
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
