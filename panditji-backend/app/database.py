@@ -15,11 +15,23 @@ if db_url.startswith("postgres://"):
 elif db_url.startswith("postgresql://"):
     db_url = db_url.replace("postgresql://", "postgresql+asyncpg://", 1)
 
+# asyncpg does not support 'sslmode' as a query parameter
+if "sslmode=" in db_url:
+    # Remove sslmode from the URL if it exists
+    import urllib.parse
+    parsed = urllib.parse.urlparse(db_url)
+    query = urllib.parse.parse_qs(parsed.query)
+    query.pop('sslmode', None)
+    new_query = urllib.parse.urlencode(query, doseq=True)
+    db_url = parsed._replace(query=new_query).geturl()
+
 engine = create_async_engine(
     db_url,
     echo=False,
     # Use pool_pre_ping for Postgres to avoid stale connections
     pool_pre_ping=True if "postgresql" in db_url else False,
+    # Ensure SSL is enabled for Neon/Postgres if not already in URL
+    connect_args={"ssl": "require"} if "postgresql" in db_url else {}
 )
 
 AsyncSessionLocal = async_sessionmaker(
