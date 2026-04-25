@@ -6,7 +6,7 @@ import os
 class Settings(BaseSettings):
     # Field definitions
     DATABASE_URL: str = "sqlite+aiosqlite:///./panditji.db"
-    JWT_SECRET: str = "change-this-secret-key-in-production"
+    JWT_SECRET: str = pydantic.Field("change-this-secret-key-in-production", validation_alias=pydantic.AliasChoices("JWT_SECRET", "SECRET_KEY"))
     JWT_REFRESH_SECRET: str = "change-this-refresh-secret-in-production"
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
@@ -15,6 +15,12 @@ class Settings(BaseSettings):
     RAZORPAY_KEY_SECRET: str = ""
     RAZORPAY_WEBHOOK_SECRET: str = ""
     PLATFORM_FEE_PERCENT: float = 15.0
+    FRONTEND_URL: str = "http://localhost:5173"
+    CLOUDINARY_CLOUD_NAME: str = ""
+    CLOUDINARY_API_KEY: str = ""
+    CLOUDINARY_API_SECRET: str = ""
+    RESEND_API_KEY: str = ""
+    SENTRY_DSN: str = ""
 
     # Pydantic v2 Configuration
     model_config = SettingsConfigDict(

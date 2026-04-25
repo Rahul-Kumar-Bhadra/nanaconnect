@@ -36,25 +36,22 @@ api.interceptors.response.use(
       const refreshToken = localStorage.getItem('refresh_token');
       if (refreshToken) {
         try {
-          const res = await axios.post(`/api/v1/auth/refresh`, {
+          // Use a clean axios instance to avoid infinite loops
+          const res = await axios.post(`${BASE_URL}/api/v1/auth/refresh`, {
             refresh_token: refreshToken,
           });
           const newToken = res.data.access_token;
           localStorage.setItem('access_token', newToken);
           original.headers.Authorization = `Bearer ${newToken}`;
           return api(original); // retry original request
-        } catch {
-          // Refresh failed — force logout
-          localStorage.removeItem('access_token');
-          localStorage.removeItem('refresh_token');
-          localStorage.removeItem('user');
-          window.location.href = '/login';
+        } catch (refreshError) {
+          // Refresh failed — token is likely expired or invalid
+          console.error("Refresh token failed, logging out...", refreshError);
+          handleLogout();
         }
       } else {
         // No refresh token — redirect to login
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('user');
-        window.location.href = '/login';
+        handleLogout();
       }
     }
 
@@ -62,10 +59,20 @@ api.interceptors.response.use(
   }
 );
 
+function handleLogout() {
+  localStorage.removeItem('access_token');
+  localStorage.removeItem('refresh_token');
+  localStorage.removeItem('user');
+  
+  // Only redirect if not already on login page to avoid loops
+  if (!window.location.pathname.includes('/login')) {
+    window.location.href = '/login?expired=true';
+  }
+}
+
 // ─── Helper: extract error message from FastAPI response ──────────────────
 export function getErrorMessage(error: unknown): string {
   if (axios.isAxiosError(error)) {
-    // FastAPI returns { detail: "message" } or { detail: [{ msg: "..." }] }
     const detail = error.response?.data?.detail;
     if (typeof detail === 'string') return detail;
     if (Array.isArray(detail)) return detail.map((d: { msg: string }) => d.msg).join(', ');

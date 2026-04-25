@@ -1,6 +1,11 @@
-from fastapi import FastAPI
+import sentry_sdk
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+
 from app.routers.pandits import router as pandits_router
 from app.routers.bookings import router as bookings_router
 from app.routers.payments import router as payments_router
@@ -9,7 +14,20 @@ from app.routers.auth import router as auth_router
 from sqlalchemy import select
 from app.database import AsyncSessionLocal, create_tables
 from app.models.puja import PujaCategory
-# Import all models so Base.metadata is populated before create_tables()
+from app.config import settings
+
+# Initialize Rate Limiter
+limiter = Limiter(key_func=get_remote_address)
+
+# Initialize Sentry
+if settings.SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=settings.SENTRY_DSN,
+        traces_sample_rate=1.0,
+        profiles_sample_rate=1.0,
+    )
+
+# Import all models
 import app.models.user  # noqa: F401
 import app.models.pandit  # noqa: F401
 import app.models.booking  # noqa: F401
@@ -18,16 +36,17 @@ import app.models.puja  # noqa: F401
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Create all tables on startup (safe for both SQLite and PostgreSQL)
     await create_tables()
     print("✅ Database tables ensured.")
     yield
 
 app = FastAPI(title="NanaConnect API", version="1.0.0", lifespan=lifespan)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[settings.FRONTEND_URL, "http://localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -56,6 +75,19 @@ async def get_puja_categories():
     except Exception as e:
         return {"error": str(e)}
 
+@app.get("/health")
+async def health_check():
+    health = {"status": "ok", "database": "unknown"}
+    try:
+        async with AsyncSessionLocal() as db:
+            await db.execute(select(1))
+            health["database"] = "connected"
+    except Exception as e:
+        health["status"] = "error"
+        health["database"] = f"error: {str(e)}"
+    return health
+
 @app.get("/")
-async def root():
+@limiter.limit("5/minute")
+async def root(request: Request):
     return {"message": "NanaConnect API is running!", "status": "stable"}

@@ -20,4 +20,5 @@ class Pandit(Base):
     specializations = Column(JSON, default=list)
     availability = Column(JSON, default=list)
     avatar = Column(String(10), default="🙏")
+    profile_photo = Column(String, nullable=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))

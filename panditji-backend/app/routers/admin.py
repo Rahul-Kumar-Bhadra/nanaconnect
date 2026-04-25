@@ -10,6 +10,7 @@ from app.models.booking import Booking
 from app.models.puja import PujaCategory
 from app.schemas.puja import PujaCategoryCreate
 from app.services.auth_service import decode_token, get_user_by_id
+from app.services.email_service import send_pandit_approval_email
 from app.config import settings
 import uuid
 
@@ -24,18 +25,9 @@ async def get_admin_user(token: str = Depends(oauth2_scheme), db: AsyncSession =
     user_id = payload.get("sub")
     user = await get_user_by_id(db, user_id)
     
-    # 🔍 Robust check: ID lookup + role check + email fallback
-    is_admin = False
-    if user:
-        # DB role check (case insensitive)
-        if str(user.role).lower() == "admin":
-            is_admin = True
-        # Emergency fallback for primary admin account
-        elif user.email == "subharahuladmin2026@gmail.com":
-            is_admin = True
-    
-    if not is_admin:
-        raise HTTPException(status_code=403, detail="Admin access required")
+    # 🛡️ Hardened Admin Check: Must have is_superuser=True
+    if not user or not user.is_superuser:
+        raise HTTPException(status_code=403, detail="Superuser access required for admin operations")
     
     return user
 
@@ -49,6 +41,7 @@ async def get_users(current_user=Depends(get_admin_user), db: AsyncSession = Dep
             "name": u.name,
             "email": u.email,
             "role": u.role,
+            "is_superuser": u.is_superuser,
             "city": u.city,
             "phone": u.phone,
             "createdAt": str(u.created_at),
@@ -88,9 +81,19 @@ async def verify_pandit(pandit_id: str, current_user=Depends(get_admin_user), db
     pandit = result.scalar_one_or_none()
     if not pandit:
         raise HTTPException(status_code=404, detail="Pandit not found")
+    
     pandit.is_verified = True
     pandit.status = "active"
     await db.commit()
+    
+    # Send approval email
+    try:
+        user = await get_user_by_id(db, pandit.user_id)
+        if user:
+            send_pandit_approval_email(user.email, user.name)
+    except Exception:
+        pass
+        
     return {"message": "Pandit verified and activated"}
 
 @router.put("/pandits/{pandit_id}/suspend", response_model=dict)
@@ -112,7 +115,6 @@ async def delete_pandit_profile(pandit_id: str, current_user=Depends(get_admin_u
     if not pandit:
         raise HTTPException(status_code=404, detail="Pandit profile not found")
     
-    # Cleanup associated bookings
     await db.execute(delete(Booking).where(Booking.pandit_id == pandit_id))
     await db.delete(pandit)
     await db.commit()
@@ -225,11 +227,9 @@ async def delete_user(user_id: str, current_user=Depends(get_admin_user), db: As
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    # Delete associated Pandit and Bookings
+    await db.execute(delete(Booking).where(Booking.user_id == user_id))
     pandit_result = await db.execute(select(Pandit).where(Pandit.user_id == user_id))
     pandit = pandit_result.scalar_one_or_none()
-    
-    await db.execute(delete(Booking).where(Booking.user_id == user_id))
     if pandit:
         await db.execute(delete(Booking).where(Booking.pandit_id == pandit.id))
         await db.delete(pandit)
@@ -244,7 +244,6 @@ async def cancel_booking(booking_id: str, current_user=Depends(get_admin_user), 
     booking = result.scalar_one_or_none()
     if not booking:
         raise HTTPException(status_code=404, detail="Booking not found")
-    
     booking.status = "cancelled"
     await db.commit()
     return {"message": "Booking cancelled successfully"}

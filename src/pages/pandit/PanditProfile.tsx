@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api, { getErrorMessage } from '@/lib/api';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { CheckCircle, Star, Loader2 } from 'lucide-react';
+import { CheckCircle, Star, Loader2, Camera, Upload } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface PanditProfileData {
@@ -24,11 +24,14 @@ interface PanditProfileData {
   pricePerHour: number;
   city: string;
   avatar: string;
+  profile_photo?: string;
   phone?: string;
 }
 
 const PanditProfilePage = () => {
   const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { data: profile, isLoading } = useQuery<PanditProfileData>({
     queryKey: ['pandit-profile-me'],
@@ -45,6 +48,7 @@ const PanditProfilePage = () => {
   const [languages, setLanguages] = useState('');
   const [bio, setBio] = useState('');
   const [specializations, setSpecializations] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
 
   // Populate form once profile loads
   useEffect(() => {
@@ -75,9 +79,40 @@ const PanditProfilePage = () => {
       });
       return res.data;
     },
-    onSuccess: () => toast.success('Profile updated successfully!'),
+    onSuccess: () => {
+      toast.success('Profile updated successfully!');
+      queryClient.invalidateQueries({ queryKey: ['pandit-profile-me'] });
+    },
     onError: (err) => toast.error(getErrorMessage(err)),
   });
+
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !profile) return;
+
+    // Client-side validation
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("File size exceeds 5MB limit");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    setIsUploading(true);
+    try {
+      await api.post(`/pandits/${profile.userId}/upload-photo`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      toast.success("Photo uploaded successfully!");
+      queryClient.invalidateQueries({ queryKey: ['pandit-profile-me'] });
+    } catch (err) {
+      toast.error(getErrorMessage(err));
+    } finally {
+      setIsUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
 
   if (isLoading) {
     return (
@@ -106,13 +141,35 @@ const PanditProfilePage = () => {
       <Card className="bg-card border-border">
         <CardContent className="p-6 space-y-6">
 
-          {/* Header */}
-          <div className="flex items-center gap-4">
-            <div className="h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center text-4xl">
-              {profile?.avatar || '🙏'}
+          {/* Header & Photo Upload */}
+          <div className="flex flex-col sm:flex-row items-center gap-6">
+            <div className="relative group">
+              <div className="h-24 w-24 rounded-full overflow-hidden border-4 border-primary/20 bg-muted flex items-center justify-center text-5xl">
+                {profile?.profile_photo ? (
+                  <img src={profile.profile_photo} alt={profile.name} className="h-full w-full object-cover" />
+                ) : (
+                  profile?.avatar || '🙏'
+                )}
+              </div>
+              <button 
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isUploading}
+                className="absolute bottom-0 right-0 p-2 bg-primary text-primary-foreground rounded-full shadow-lg hover:scale-110 transition-transform disabled:opacity-50"
+                title="Upload Photo"
+              >
+                {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Camera className="h-4 w-4" />}
+              </button>
+              <input 
+                type="file" 
+                ref={fileInputRef} 
+                onChange={handlePhotoUpload} 
+                className="hidden" 
+                accept="image/jpeg,image/png,image/webp" 
+              />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
+
+            <div className="text-center sm:text-left flex-1">
+              <div className="flex items-center justify-center sm:justify-start gap-2">
                 <h2 className="font-display text-xl font-semibold text-card-foreground">
                   {user?.name || profile?.name}
                 </h2>
@@ -123,13 +180,15 @@ const PanditProfilePage = () => {
                 : <span className="text-xs bg-warning/10 text-warning px-2 py-1 rounded-full mt-1 inline-block">Pending Verification</span>
               }
               {profile && (
-                <div className="flex items-center gap-1 mt-2">
+                <div className="flex items-center justify-center sm:justify-start gap-1 mt-2">
                   <Star className="h-4 w-4 fill-warning text-warning" />
                   <span className="text-sm text-foreground">{profile.rating} ({profile.reviewCount} reviews)</span>
                 </div>
               )}
             </div>
           </div>
+
+          <div className="separator border-b border-border" />
 
           {/* Editable fields */}
           <div className="grid sm:grid-cols-2 gap-4">
@@ -171,7 +230,7 @@ const PanditProfilePage = () => {
           </div>
 
           <Button onClick={() => updateProfile.mutate()} disabled={updateProfile.isPending}
-            className="w-full bg-gradient-saffron hover:opacity-90 text-primary-foreground">
+            className="w-full bg-gradient-saffron hover:opacity-90 text-primary-foreground font-semibold">
             {updateProfile.isPending
               ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Saving...</>
               : 'Update Profile'

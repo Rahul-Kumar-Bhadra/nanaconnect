@@ -10,6 +10,7 @@ from app.models.payment import Review
 from app.models.puja import PujaCategory
 from app.schemas.booking import BookingCreate, ReviewCreate
 from app.services.auth_service import decode_token, get_user_by_id
+from app.services.email_service import send_booking_confirmation, send_booking_alert_to_pandit
 from app.config import settings
 import uuid
 
@@ -31,8 +32,15 @@ async def create_booking(data: BookingCreate, current_user=Depends(get_current_u
     pandit = pandit_result.scalar_one_or_none()
     if not pandit:
         raise HTTPException(status_code=404, detail="Pandit not found")
+    
+    puja_result = await db.execute(select(PujaCategory).where(PujaCategory.id == data.puja_category_id))
+    puja = puja_result.scalar_one_or_none()
+    if not puja:
+        raise HTTPException(status_code=404, detail="Puja category not found")
+
     total = pandit.price_per_hour * data.duration_hours
     platform_fee = total * settings.PLATFORM_FEE_PERCENT / 100
+    
     booking = Booking(
         id=str(uuid.uuid4()),
         user_id=current_user.id,
@@ -50,6 +58,23 @@ async def create_booking(data: BookingCreate, current_user=Depends(get_current_u
     db.add(booking)
     await db.commit()
     await db.refresh(booking)
+    
+    # Send emails
+    try:
+        pandit_user = await get_user_by_id(db, pandit.user_id)
+        send_booking_confirmation(
+            current_user.email, current_user.name, 
+            pandit_user.name if pandit_user else "Pandit", 
+            puja.name, booking.booking_date, booking.id
+        )
+        if pandit_user:
+            send_booking_alert_to_pandit(
+                pandit_user.email, pandit_user.name, 
+                current_user.name, puja.name, booking.booking_date
+            )
+    except Exception:
+        pass
+
     return {"id": booking.id, "status": booking.status, "totalAmount": booking.total_amount}
 
 @router.get("/my", response_model=List[dict])

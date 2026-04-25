@@ -8,6 +8,7 @@ export interface User {
   name: string;
   email: string;
   role: UserRole;
+  is_superuser?: boolean;
   city: string;
   phone?: string;
   avatar?: string;
@@ -34,7 +35,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const stored = localStorage.getItem('user');
     const token = localStorage.getItem('access_token');
     if (stored && token) {
-      try { setUser(JSON.parse(stored)); } catch { localStorage.removeItem('user'); }
+      try { 
+        setUser(JSON.parse(stored)); 
+      } catch { 
+        localStorage.removeItem('user'); 
+      }
     }
     setIsLoading(false);
   }, []);
@@ -73,6 +78,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
+    // Optional: Call backend logout to revoke refresh token
+    api.post('/auth/logout').catch(() => {}); 
+    
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('user');
