@@ -8,7 +8,7 @@ const BASE_URL = import.meta.env.VITE_API_URL || '';
 export const api = axios.create({
   baseURL: `${BASE_URL}/api/v1`,
   headers: { 'Content-Type': 'application/json' },
-  timeout: 60000,
+  timeout: 120000, // Increased for Render Free Tier cold starts
 });
 
 // ─── Request interceptor: attach JWT token on every request ────────────────

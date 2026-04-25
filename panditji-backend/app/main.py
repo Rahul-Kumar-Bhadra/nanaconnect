@@ -15,6 +15,11 @@ from sqlalchemy import select
 from app.database import AsyncSessionLocal, create_tables
 from app.models.puja import PujaCategory
 from app.config import settings
+import logging
+
+# Setup logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Initialize Rate Limiter
 limiter = Limiter(key_func=get_remote_address)
@@ -37,7 +42,7 @@ import app.models.puja  # noqa: F401
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await create_tables()
-    print("✅ Database tables ensured.")
+    logger.info("Database tables ensured.")
     yield
 
 app = FastAPI(title="NanaConnect API", version="1.0.0", lifespan=lifespan)
@@ -84,6 +89,7 @@ async def health_check():
             await db.execute(select(1))
             health["database"] = "connected"
     except Exception as e:
+        logger.error(f"Database connection failed: {e}")
         health["status"] = "error"
         health["database"] = f"error: {str(e)}"
     return health

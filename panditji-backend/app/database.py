@@ -62,10 +62,10 @@ async def create_tables():
         try:
             async with engine.begin() as conn:
                 await conn.run_sync(Base.metadata.create_all)
-            logger.info("✅ Database tables ensured.")
+            logger.info("Database tables ensured.")
             return
         except Exception as e:
-            logger.error(f"❌ Database connection attempt {attempt} failed: {e}")
+            logger.error(f"Database connection attempt {attempt} failed: {e}")
             if attempt < max_retries:
                 logger.info(f"Retrying in {retry_delay} seconds...")
                 await asyncio.sleep(retry_delay)
