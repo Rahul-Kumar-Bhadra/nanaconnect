@@ -46,8 +46,18 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(title="NanaConnect API", version="1.0.0", lifespan=lifespan)
-app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    logger.info(f"Incoming Request: {request.method} {request.url}")
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    logger.info(f"Finished Request: {request.method} {request.url} - Status: {response.status_code} - Time: {process_time:.2f}s")
+    return response
+
+# app.state.limiter = limiter
+# app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # CORS Configuration (ULTRA PERMISSIVE)
 app.add_middleware(

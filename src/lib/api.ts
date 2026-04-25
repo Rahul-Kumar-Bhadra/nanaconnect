@@ -73,10 +73,16 @@ function handleLogout() {
 // ─── Helper: extract error message from FastAPI response ──────────────────
 export function getErrorMessage(error: unknown): string {
   if (axios.isAxiosError(error)) {
-    const detail = error.response?.data?.detail;
-    if (typeof detail === 'string') return detail;
-    if (Array.isArray(detail)) return detail.map((d: { msg: string }) => d.msg).join(', ');
-    return error.message;
+    console.error('API Error Details:', {
+      message: error.message,
+      code: error.code,
+      status: error.response?.status,
+      data: error.response?.data,
+      config: error.config
+    });
+    if (error.code === 'ECONNABORTED') return 'Request timed out. Please try again.';
+    if (!error.response) return 'Network Error: Cannot reach the server. Please check your connection or CORS settings.';
+    return error.response.data?.detail || error.response.data?.message || 'An error occurred';
   }
   return 'Something went wrong. Please try again.';
 }
