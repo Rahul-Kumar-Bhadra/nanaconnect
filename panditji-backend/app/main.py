@@ -49,13 +49,14 @@ app = FastAPI(title="NanaConnect API", version="1.0.0", lifespan=lifespan)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# CORS Configuration (Maximum Compatibility Mode)
+# CORS Configuration (ULTRA PERMISSIVE)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=False, # Set to False to allow "*" origins without browser errors
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 app.include_router(auth_router, prefix="/api/v1")
