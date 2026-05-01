@@ -1,5 +1,5 @@
 import sentry_sdk
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from slowapi import Limiter, _rate_limit_exceeded_handler
@@ -48,12 +48,20 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="NanaConnect API", version="1.0.0", lifespan=lifespan)
 
 @app.middleware("http")
-async def log_requests(request: Request, call_next):
-    logger.info(f"Incoming Request: {request.method} {request.url}")
-    start_time = time.time()
-    response = await call_next(request)
-    process_time = time.time() - start_time
-    logger.info(f"Finished Request: {request.method} {request.url} - Status: {response.status_code} - Time: {process_time:.2f}s")
+async def add_cors_headers(request: Request, call_next):
+    # Handle preflight (OPTIONS) requests
+    if request.method == "OPTIONS":
+        response = Response()
+        response.status_code = 204
+    else:
+        response = await call_next(request)
+    
+    # Force CORS headers on EVERY response
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "*"
+    response.headers["Access-Control-Allow-Credentials"] = "false"
+    
     return response
 
 # app.state.limiter = limiter
